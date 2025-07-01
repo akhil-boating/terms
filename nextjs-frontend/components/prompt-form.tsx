@@ -1,11 +1,12 @@
 'use client'
 import * as React from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import Textarea from 'react-textarea-autosize'
 import { UseChatHelpers } from 'ai/react'
 
-// import * as pdfjsLib from 'pdfjs-dist'
-// pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf'
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`
 import { useEnterSubmit } from '@/lib/hooks/use-enter-submit'
 import { cn } from '@/lib/utils'
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -29,33 +30,35 @@ export function PromptForm({
 }: PromptProps) {
   const { formRef, onKeyDown } = useEnterSubmit()
   const inputRef = React.useRef<HTMLTextAreaElement>(null)
+  const [pdfText, setPdfText] = useState<string>('') // New state for PDF text
   const fileInputRef = React.useRef<HTMLInputElement>(null)
   React.useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus()
     }
   }, [])
-  // const handlePdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files?.[0]
-  //   if (!file) return
-  //   const reader = new FileReader()
-  //   reader.onload = async () => {
-  //     const typedarray = new Uint8Array(reader.result as ArrayBuffer)
-  //     const pdf = await pdfjsLib.getDocument(typedarray).promise
-  //     let fullText = ''
-  //     for (let i = 1; i <= pdf.numPages; i++) {
-  //       const page = await pdf.getPage(i)
-  //       const textContent = await page.getTextContent()
-  //       console.log(`Page ${i} text:`, textContent.items)
-  //       const pageText = textContent.items
-  //         .map((item: any) => item.str)
-  //         .join(' ')
-  //       fullText += `Page ${i}:\n${pageText}\n\n`
-  //     }
-  //     setInput((prev: string) => (prev ? prev + '\n\n' + fullText : fullText))
-  //   }
-  //   reader.readAsArrayBuffer(file)
-  // }
+  const handlePdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = async () => {
+      const typedarray = new Uint8Array(reader.result as ArrayBuffer)
+      const pdf = await pdfjsLib.getDocument(typedarray).promise
+      let fullText = ''
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i)
+        const textContent = await page.getTextContent()
+        console.log(`Page ${i} text:`, textContent.items)
+        const pageText = textContent.items
+          .map((item: any) => item.str)
+          .join(' ')
+        fullText += `Page ${i}:\n${pageText}\n\n`
+      }
+      setPdfText(fullText) // Store the extracted text in the new state
+      // setInput((prev: string) => (prev ? prev + '\n\n' + fullText : fullText))
+    }
+    reader.readAsArrayBuffer(file)
+  }
   return (
     <form
       onSubmit={async e => {
@@ -63,8 +66,20 @@ export function PromptForm({
         if (!input?.trim()) {
           return
         }
+        // setInput('')
+
+        const combinedInput = `${pdfText}\n${input}`.trim() // Combine PDF text and user input
+
+        if (!combinedInput) {
+          return
+        }
+
+        // Clear the states and call onSubmit
         setInput('')
-        await onSubmit(input)
+        setPdfText('')
+        await onSubmit(combinedInput)
+
+        // await onSubmit(input)
       }}
       ref={formRef}
     >
@@ -112,6 +127,14 @@ export function PromptForm({
             <TooltipContent>Upload PDF</TooltipContent>
           </Tooltip>
         </div>
+        {/* Hidden File Input */}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="application/pdf"
+          onChange={handlePdfUpload}
+          className="hidden"
+        />
         <div className="absolute right-0 top-4 sm:right-4">
           <Tooltip>
             <TooltipTrigger asChild>
