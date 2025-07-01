@@ -24,9 +24,18 @@ export async function GET(request: Request) {
   // Create a response object so we can attach a cookie to it
   const response = NextResponse.redirect(redirectUrl)
 
-  // console.log("hello")
-  // console.log("hasfasdfello")
+  console.log("hello")
 
+  // --- START OF ADDED CODE ---
+  // Set a new, non-HttpOnly cookie that is accessible by client-side JavaScript
+  response.cookies.set({
+    name: 'very-ccol-amazing-ahahahahaa-cookie',      // Name of the cookie
+    value: 'hello-from-server', // Value of the cookie
+    path: '/',                  // The path for which the cookie is valid
+    httpOnly: false,            // This is the important part! It makes the cookie accessible to JS.
+    maxAge: 60 * 60 * 24,       // Optional: sets the cookie to expire in 1 day (in seconds)
+  })
+  // --- END OF ADDED CODE ---
 
   // Return the response object which includes the redirect and the new cookie
   return response

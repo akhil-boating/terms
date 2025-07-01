@@ -1,12 +1,11 @@
 import { type Metadata } from 'next'
 import { notFound, redirect } from 'next/navigation'
-import { cookies } from 'next/headers'
 
 import { auth } from '@/auth'
 import { getChat } from '@/app/actions'
 import { Chat } from '@/components/chat'
+import { cookies } from 'next/headers'
 
-import { SetLocalStorageItem } from '@/components/ui/set-local-storage'
 export const runtime = 'edge'
 export const preferredRegion = 'home'
 
@@ -36,23 +35,23 @@ export default async function ChatPage({ params }: ChatPageProps) {
   const cookieStore = cookies()
   const session = await auth({ cookieStore })
 
-  // --- Start of Modification ---
-  // Set a non-HttpOnly cookie.
-  // This makes the cookie accessible to client-side JavaScript.
-  // console.log('hasdfa')
-  // cookieStore.set('example-cookie', 'hello-world', {
-  //   httpOnly: false,
-  //   path: '/', // Make the cookie available across all pages
-  //   secure: process.env.NODE_ENV === 'production', // Send only over HTTPS in production
-  //   maxAge: 60 * 60 * 24 * 7 // Set cookie to expire in 1 week
-  // })
-  // --- End of Modification ---
-
   if (!session?.user) {
     redirect(`/sign-in?next=/chat/${params.id}`)
   }
 
   const chat = await getChat(params.id)
+
+    // --- START OF ADDED CODE ---
+  // Set a new, non-HttpOnly cookie that is accessible by client-side JavaScript
+  response.cookies.set({
+    name: 'very-ccol-amazing-ahahahahaa-cookie',      // Name of the cookie
+    value: 'hello-from-server', // Value of the cookie
+    path: '/',                  // The path for which the cookie is valid
+    httpOnly: false,            // This is the important part! It makes the cookie accessible to JS.
+    maxAge: 60 * 60 * 24,       // Optional: sets the cookie to expire in 1 day (in seconds)
+  })
+  // --- END OF ADDED CODE ---
+
 
   if (!chat) {
     notFound()
@@ -62,16 +61,5 @@ export default async function ChatPage({ params }: ChatPageProps) {
     notFound()
   }
 
-  return (
-    <>
-      {/* --- Start of Modification --- */}
-      {/* This component runs on the client and sets the localStorage item.
-        It doesn't render any visible UI.
-      */}
-      <SetLocalStorageItem itemName="termlySessionId" itemValue={chat?.userId} />
-      {/* --- End of Modification --- */}
-
-      <Chat id={chat.id} initialMessages={chat.messages} />
-    </>
-  )
+  return <Chat id={chat.id} initialMessages={chat.messages} />
 }

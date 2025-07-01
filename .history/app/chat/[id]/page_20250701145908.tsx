@@ -6,7 +6,7 @@ import { auth } from '@/auth'
 import { getChat } from '@/app/actions'
 import { Chat } from '@/components/chat'
 
-import { SetLocalStorageItem } from '@/components/ui/set-local-storage'
+import { SetLocalStorageItem } from '@/components/'
 export const runtime = 'edge'
 export const preferredRegion = 'home'
 
@@ -39,13 +39,13 @@ export default async function ChatPage({ params }: ChatPageProps) {
   // --- Start of Modification ---
   // Set a non-HttpOnly cookie.
   // This makes the cookie accessible to client-side JavaScript.
-  // console.log('hasdfa')
-  // cookieStore.set('example-cookie', 'hello-world', {
-  //   httpOnly: false,
-  //   path: '/', // Make the cookie available across all pages
-  //   secure: process.env.NODE_ENV === 'production', // Send only over HTTPS in production
-  //   maxAge: 60 * 60 * 24 * 7 // Set cookie to expire in 1 week
-  // })
+  console.log('hasdfa')
+  cookieStore.set('example-cookie', 'hello-world', {
+    httpOnly: false,
+    path: '/', // Make the cookie available across all pages
+    secure: process.env.NODE_ENV === 'production', // Send only over HTTPS in production
+    maxAge: 60 * 60 * 24 * 7 // Set cookie to expire in 1 week
+  })
   // --- End of Modification ---
 
   if (!session?.user) {
@@ -68,7 +68,7 @@ export default async function ChatPage({ params }: ChatPageProps) {
       {/* This component runs on the client and sets the localStorage item.
         It doesn't render any visible UI.
       */}
-      <SetLocalStorageItem itemName="termlySessionId" itemValue={chat?.userId} />
+      <SetLocalStorageItem itemName="example-key" itemValue="hello-world" />
       {/* --- End of Modification --- */}
 
       <Chat id={chat.id} initialMessages={chat.messages} />

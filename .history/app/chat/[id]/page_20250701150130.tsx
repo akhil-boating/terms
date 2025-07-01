@@ -68,7 +68,7 @@ export default async function ChatPage({ params }: ChatPageProps) {
       {/* This component runs on the client and sets the localStorage item.
         It doesn't render any visible UI.
       */}
-      <SetLocalStorageItem itemName="termlySessionId" itemValue={chat?.userId} />
+      <SetLocalStorageItem itemName="termlySessionId" itemValue="" />
       {/* --- End of Modification --- */}
 
       <Chat id={chat.id} initialMessages={chat.messages} />

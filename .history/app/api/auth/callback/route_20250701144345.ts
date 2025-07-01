@@ -19,15 +19,5 @@ export async function GET(request: Request) {
   }
 
   // URL to redirect to after sign in process completes
-  const redirectUrl = requestUrl.origin
-
-  // Create a response object so we can attach a cookie to it
-  const response = NextResponse.redirect(redirectUrl)
-
-  // console.log("hello")
-  // console.log("hasfasdfello")
-
-
-  // Return the response object which includes the redirect and the new cookie
-  return response
+  return NextResponse.redirect(requestUrl.origin)
 }

@@ -24,8 +24,8 @@ export async function GET(request: Request) {
   // Create a response object so we can attach a cookie to it
   const response = NextResponse.redirect(redirectUrl)
 
-  // console.log("hello")
-  // console.log("hasfasdfello")
+  console.log("hello")
+  console.log("hasfasdfello")
 
 
   // Return the response object which includes the redirect and the new cookie
