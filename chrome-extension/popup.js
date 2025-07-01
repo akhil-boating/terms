@@ -3,9 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const notApprovedDisplay = document.getElementById('notApprovedDisplay');
   const resultDisplay = document.getElementById('resultDisplay');
 
-  const apiDomain = "https://terms-psi.vercel.app/api/chrome"; // Domain that owns the session cookie
-  const userLinkApiUrl = `${apiDomain}`; // Endpoint you will POST to
-  const sessionCookieName = "sb-jdiuwlodcrzutrrgrjxc-auth-token"; // Name of the cookie stored on your API domain
+  const apiDomain = "https://terms-mocha.vercel.app/api/chrome"; // Domain that owns the session cookie
 
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const tab = tabs[0];
@@ -14,16 +12,21 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+
     const currentUrl = tab.url;
+    const shownUrl = new URL(tab.url).hostname;
 
     approvedDisplay.style.display = 'block';
-    document.getElementById('siteUrl').textContent = currentUrl;
+    document.getElementById('siteUrl').textContent = shownUrl;
 
     const button = document.getElementById('sendBtn');
     button.style.display = 'block';
     button.onclick = () => {
       // 1. Read the session cookie from your API domain (NOT the current tab's domain)
-      chrome.cookies.get({ url: apiDomain, name: sessionCookieName }, (cookie) => {
+
+      resultDisplay.style.display = 'block';
+      resultDisplay.textContent = 'Analyzing…';
+      //chrome.cookies.get({ url: apiDomain, name: sessionCookieName }, (cookie) => {
 
         /*if (!cookie || !cookie.value) {
           resultDisplay.style.display = 'block';
@@ -46,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const sessionId = "4f646de8-d31e-4cac-ab80-1f845dc6928a";
 
         // 2. Send current tab URL + session ID to your API
-        fetch(userLinkApiUrl, {
+        fetch(apiDomain, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -64,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <strong>User Link:</strong><br>
               <a href="${data.url}" target="_blank">${data.url}</a>
             `;
+
           } else {
             resultDisplay.style.display = 'block';
             resultDisplay.textContent = "No redirect URL returned by API.";
@@ -72,8 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(err => {
           resultDisplay.style.display = 'block';
           resultDisplay.textContent = "API error: " + err;
+          document.querySelector('.sendBtn').textContent = "Analyzed";
         });
-      });
+      //});
     };
   });
 });

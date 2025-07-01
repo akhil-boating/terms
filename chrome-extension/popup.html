@@ -1,52 +1,104 @@
 <!DOCTYPE html>
+
 <html>
   <head>
+    <meta charset="UTF-8" />
+    <title>Analyze Page</title>
     <style>
-      body {
-        font-family: sans-serif;
-        padding: 12px;
-        max-width: 300px;
+      /* ----------  Base resets  ---------- */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
 
-      #approvedDisplay,
-      #notApprovedDisplay {
-        display: none;
-      }
+  body {
+    font-family: "Segoe UI", Roboto, sans-serif;
+    background: #f5f7fa;
+    color: #333;
+    width: 320px;
+    padding: 16px;
+  }
 
-      button {
-        margin-top: 10px;
-        padding: 8px 12px;
-        font-size: 14px;
-        cursor: pointer;
-      }
+  /* ----------  Cards / containers  ---------- */
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    padding: 20px;
+  }
 
-      .highlight {
-        font-weight: bold;
-        color: green;
-      }
+  h1 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #1a73e8;
+  }
 
-      #resultDisplay {
-        margin-top: 12px;
-        font-size: 13px;
-        word-wrap: break-word;
-        display: none;
-      }
-    </style>
+  #siteUrl {
+    font-weight: 600;
+    color: #00695c;
+    word-break: break-all;
+  }
+
+  #resultDisplay {
+    margin-top: 16px;
+    font-size: 14px;
+    word-break: break-word;
+    display: none;
+    line-height: 1.4;
+  }
+
+  /* ----------  Buttons  ---------- */
+  .btn {
+    display: inline-block;
+    background: #1a73e8;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s ease;
+    margin-top: 16px;
+  }
+
+  .btn:hover {
+    background: #1558b0;
+  }
+
+  /* ----------  States  ---------- */
+  #approvedDisplay,
+  #notApprovedDisplay {
+    display: none;
+  }
+
+  #notApprovedDisplay {
+    text-align: center;
+    color: #c62828;
+  }
+</style>
+
   </head>
 
   <body>
-    <!-- Display shown if site is approved -->
-    <div id="approvedDisplay">
-      <div id="message">Active site: <span id="siteUrl" class="highlight"></span></div>
-      <div id="resultDisplay"></div>
-      <button id="sendBtn" style="display: none;">Analyze</button>
-    </div>
+    <div class="card">
+      <!-- Display shown if site is approved -->
+      <div id="approvedDisplay">
+        <h1>Active Site</h1>
+        <p id="siteUrl"></p>
+        <div id="resultDisplay"></div>
+        <button id="sendBtn" class="btn" style="display: none;">Analyze</button>
+      </div>
 
-    <!-- Display shown if site is NOT approved -->
-    <div id="notApprovedDisplay">
-      <div>This site is not available or could not be read.</div>
-    </div>
+  <!-- Display shown if site is NOT approved -->
+  <div id="notApprovedDisplay">
+    <p>This site is not available or could not be read.</p>
+  </div>
+</div>
 
-    <script src="popup.js"></script>
+<script src="popup.js"></script>
+
   </body>
 </html>
