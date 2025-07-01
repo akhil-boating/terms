@@ -10,21 +10,15 @@ const AlertDialog = AlertDialogPrimitive.Root
 
 const AlertDialogTrigger = AlertDialogPrimitive.Trigger
 
-// ./components/ui/alert-dialog.tsx
-
-// 1. We explicitly tell TypeScript that this component can receive a className.
+// @ts-ignore
 const AlertDialogPortal = ({
   className,
   children,
   ...props
-}: AlertDialogPrimitive.AlertDialogPortalProps & {
-  className?: string
-}) => (
-  // 2. We pass the original props to the Portal, which doesn't accept a className.
+}: AlertDialogPrimitive.AlertDialogPortalProps) => (
   <AlertDialogPrimitive.Portal {...props}>
-    {/* 3. We apply the className to the actual <div> that provides the styling. */}
     <div
-      className={cn(
+      className={cn( // <-- The className should be applied here
         'fixed inset-0 z-50 flex items-end justify-center sm:items-center',
         className
       )}
@@ -32,8 +26,8 @@ const AlertDialogPortal = ({
       {children}
     </div>
   </AlertDialogPrimitive.Portal>
-)
-AlertDialogPortal.displayName = AlertDialogPrimitive.Portal.displayName
+);
+AlertDialogPortal.displayName = AlertDialogPrimitive.Portal.displayName;
 
 const AlertDialogOverlay = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Overlay>,

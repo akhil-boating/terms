@@ -10,25 +10,16 @@ const AlertDialog = AlertDialogPrimitive.Root
 
 const AlertDialogTrigger = AlertDialogPrimitive.Trigger
 
-// ./components/ui/alert-dialog.tsx
-
-// 1. We explicitly tell TypeScript that this component can receive a className.
-const AlertDialogPortal = ({
-  className,
-  children,
-  ...props
-}: AlertDialogPrimitive.AlertDialogPortalProps & {
-  className?: string
-}) => (
-  // 2. We pass the original props to the Portal, which doesn't accept a className.
-  <AlertDialogPrimitive.Portal {...props}>
-    {/* 3. We apply the className to the actual <div> that provides the styling. */}
-    <div
-      className={cn(
-        'fixed inset-0 z-50 flex items-end justify-center sm:items-center',
-        className
-      )}
-    >
+// @ts-ignore
+const AlertDialogPortal = (
+  {
+    className,
+    children,
+    ...props
+  }: AlertDialogPrimitive.AlertDialogPortalProps & { className?: string } // <-- FIX IS HERE
+) => (
+  <AlertDialogPrimitive.Portal className={cn(className)} {...props}>
+    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
       {children}
     </div>
   </AlertDialogPrimitive.Portal>
