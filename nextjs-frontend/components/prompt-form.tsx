@@ -4,8 +4,11 @@ import Link from 'next/link'
 import Textarea from 'react-textarea-autosize'
 import { UseChatHelpers } from 'ai/react'
 
-// import * as pdfjsLib from 'pdfjs-dist'
-// pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`
+// import { N}
+import * as pdfjsLib from 'pdfjs-dist'
+// pdfjsLib.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.mjs`;
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`
+// pdfjsLib.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.js`;
 import { useEnterSubmit } from '@/lib/hooks/use-enter-submit'
 import { cn } from '@/lib/utils'
 import { Button, buttonVariants } from '@/components/ui/button'
