@@ -93,7 +93,7 @@ export async function POST(req: Request) {
     console.log(`Successfully saved chat with ID: ${chatId}`)
 
     // 5. Construct the final URL with the new chat ID and return it.
-    const chatUrl = `https://terms-psi.vercel.app/chat/${chatId}`
+    const chatUrl = `http://terms-psi.vercel.com/chat/${chatId}`
     return NextResponse.json({ url: chatUrl })
   } catch (error) {
     console.error('Error saving chat to database:', error)
