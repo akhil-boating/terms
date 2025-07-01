@@ -17,22 +17,19 @@ export async function getChats(userId?: string | null) {
     const supabase = createServerActionClient<Database>({
       cookies: () => cookieStore
     })
-
     const { data } = await supabase
       .from('chats')
       .select('payload')
-      // This query now works because the user_id column is being populated
+      .order('payload->createdAt', { ascending: false })
       .eq('user_id', userId)
-      // For reliable sorting, cast the numeric timestamp from the JSON
-      .order('created_at', { ascending: false }) // 👈 Best practice: Order by the column
       .throwOnError()
 
     return (data?.map(entry => entry.payload) as Chat[]) ?? []
   } catch (error) {
-    console.error('Error fetching chats:', error)
     return []
   }
 }
+
 export async function getChat(id: string) {
   const cookieStore = cookies()
   const supabase = createServerActionClient<Database>({

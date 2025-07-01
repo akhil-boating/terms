@@ -63,12 +63,7 @@ export async function POST(req: Request) {
         ]
       }
       // Insert chat into database.
-      console.log('Inserting chat into database:', payload)
-      await supabase
-        .from('chats')
-        .upsert({ id, user_id: userId, payload }) // 👈 FIX IS HERE
-        .throwOnError()
-      console.log('Chat inserted successfully:', payload)
+      await supabase.from('chats').upsert({ id, payload }).throwOnError()
     }
   })
 
