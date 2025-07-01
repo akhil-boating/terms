@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 12px;
+        max-width: 300px;
+      }
+
+      #approvedDisplay,
+      #notApprovedDisplay {
+        display: none;
+      }
+
+      button {
+        margin-top: 10px;
+        padding: 8px 12px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .highlight {
+        font-weight: bold;
+        color: green;
+      }
+
+      #resultDisplay {
+        margin-top: 12px;
+        font-size: 13px;
+        word-wrap: break-word;
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Display shown if site is approved -->
+    <div id="approvedDisplay">
+      <div id="message">Active site: <span id="siteUrl" class="highlight"></span></div>
+      <div id="resultDisplay"></div>
+      <button id="sendBtn" style="display: none;">Analyze</button>
+    </div>
+
+    <!-- Display shown if site is NOT approved -->
+    <div id="notApprovedDisplay">
+      <div>This site is not available or could not be read.</div>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
