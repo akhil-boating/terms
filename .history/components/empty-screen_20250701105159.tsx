@@ -23,7 +23,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
   return (
     <div className="mx-auto max-w-2xl px-4">
       <div className="rounded-lg border bg-background p-8">
-        <div className="mb-4 flex justify-center">
+        <div className="mb-4">
           <Image
             src="/logo.png"
             alt="Safe Secure Searching"

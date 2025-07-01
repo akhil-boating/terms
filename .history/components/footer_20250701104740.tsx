@@ -12,8 +12,7 @@ export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
       )}
       {...props}
     >
-      This is not legal advice. This is a demo app for educational purposes
-      only.
+      This is not legal advi
     </p>
   )
 }

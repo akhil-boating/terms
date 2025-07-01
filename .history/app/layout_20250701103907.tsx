@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     default: 's_cubed',
     template: `%s - Next.js AI Chatbot`
   },
-  description: 'Safe Secure Searching',
+  description: '',
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: 'white' },
     { media: '(prefers-color-scheme: dark)', color: 'black' }

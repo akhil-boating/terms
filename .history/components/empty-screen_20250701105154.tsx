@@ -23,7 +23,10 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
   return (
     <div className="mx-auto max-w-2xl px-4">
       <div className="rounded-lg border bg-background p-8">
-        <div className="mb-4 flex justify-center">
+        <h1 className="mb-2 text-lg font-semibold">
+          Welcome to Safe Secure Searching
+        </h1>
+        <div className="mb-4">
           <Image
             src="/logo.png"
             alt="Safe Secure Searching"
@@ -33,10 +36,6 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
             priority
           />
         </div>
-        <h1 className="mb-2 text-lg font-semibold">
-          Welcome to Safe Secure Searching
-        </h1>
-
         <div className="mt-4 flex flex-col items-start space-y-2">
           {exampleMessages.map((message, index) => (
             <Button
