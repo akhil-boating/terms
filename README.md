@@ -1,12 +1,17 @@
 # FriendlyFinePrint
-
 [Try it Yourself!](https://terms-mocha.vercel.app/)
-You can make your own account, or use the existing credentials -> email: conga-somber-9g@icloud.com password: Hello123
+You can make your own account, or use the existing credentials
+```
+email: conga-somber-9g@icloud.com 
+password: Hello123
+```
 
 FriendlyFinePrint is a Mozilla Extension and Web Application to help users better understand Terms and Conditions, Privacy Policies, Cookie Statements and other types of documents with a lot of legalese and complicated jargons. 
 
-## Inspiration
+[Link to Youtube Demo](https://youtu.be/zlMk5BIRqVg)
 
+
+## Inspiration
 Terms and Conditions, Privacy Policies and other such documents are sometimes intentionally over-complicated with a lot of legalese and complicated jargons in order to obfuscate contentious clauses.
 
 
@@ -25,16 +30,11 @@ In this case, an end-user was denied their right to rightfully pursue legal acti
 ![alt text](nextjs-frontend/public/demo/2.png)
 
 ## Tech Stack
-
 ```
-Nextjs (backend)
+Next.js
 Firefox Extension
 OpenAI Web Search and Completions API
 ```
-
-## Youtube Video Demo
-
-[Link to Youtube Demo](https://youtu.be/zlMk5BIRqVg)
 
 ## Future Considerations
 We'd love to develop an open-source and closed-source version of this application. In a "Pro Version" of this application, we plan to also try to scrape or gather historical court records to reference against the analyzed T&C etc to identify potential infringement of local, state and federal laws.  
